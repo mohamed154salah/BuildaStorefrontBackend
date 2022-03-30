@@ -1,5 +1,6 @@
 import { Order, OrderStore } from "./../models/order";
 import express, { Request, Response } from "express";
+import authorization from "../middleware/authorization";
 import dotenv from "dotenv";
 import {
   order_products,
@@ -18,9 +19,10 @@ const index = async (_req: Request, res: Response) => {
 };
 
 const show = async (_req: Request, res: Response) => {
-  if (_req.body.id) {
+  if (_req.query.id) {
     try {
-      const order = await orderStore.show(_req.body.id);
+      // eslint-disable-next-line prettier/prettier
+      const order = await orderStore.show(parseInt(_req.query.id as string));
       res.json(order);
     } catch (err) {
       res.status(400).send(`${err}`);
@@ -93,12 +95,12 @@ const getProduct_order = async (_req: Request, res: Response) => {
 };
 
 const orderRoutes = (app: express.Application) => {
-  app.get("/orders", index);
-  app.get("/order", show);
-  app.post("/order", create);
+  app.get("/orders", authorization, index);
+  app.get("/order", authorization, show);
+  app.post("/order", authorization, create);
   app.delete("/order", destroy);
   app.get("/or", getProduct_order);
-  app.post("/orders/:id/products", addProduct);
+  app.post("/orders/:id/products", authorization, addProduct);
 };
 
 export default orderRoutes;

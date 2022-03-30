@@ -21,7 +21,8 @@ const getProduct_P = async (_req: Request, res: Response) => {
 };
 const show = async (_req: Request, res: Response) => {
   try {
-    const product = await productsStore.show(_req.body.id);
+    // eslint-disable-next-line prettier/prettier
+    const product = await productsStore.show(parseInt(_req.query.id as string));
     res.json(product);
   } catch (error) {
     res.status(400);

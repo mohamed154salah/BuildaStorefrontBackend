@@ -9,7 +9,7 @@ const userRoutes = (app: express.Application) => {
   app.get("/user", authorization, show);
   app.post("/users", create);
   app.delete("/users", destroy);
-  app.put("/users",update)
+  app.put("/users",authorization,update)
   app.post("/users/authenticate", authenticate);
 };
 interface JwtPayload {
@@ -23,8 +23,15 @@ const index = async (_req: Request, res: Response) => {
 };
 
 const show = async (_req: Request, res: Response) => {
-  const user = await store.show(_req.body.id);
+  try {
+      // eslint-disable-next-line prettier/prettier
+  const user = await store.show(_req.query.id as string);
   res.json(user);
+} catch (error) {
+  res.status(400);
+  // eslint-disable-next-line prettier/prettier
+  res.json(error);
+}
 };
 
 const create = async (_req: Request, res: Response) => {
@@ -75,8 +82,16 @@ const update = async (req: Request, res: Response) => {
 
 
 const destroy = async (_req: Request, res: Response) => {
+  try {
+    
   const deleted = await store.delete(_req.body.id);
   res.json(deleted);
+} catch (error) {
+  res.status(401)
+  res.json(error)
+
+} 
+
 };
 
 const authenticate = async (_req: Request, res: Response) => {

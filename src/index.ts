@@ -4,7 +4,6 @@ import morgan from "morgan";
 import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
 import userRoutes from "./handlers/user";
-import articleRoutes from "./handlers/book";
 import productsRoutes from "./handlers/products";
 import orderRoutes from "./handlers/order";
 import dashboardRoutes from "./handlers/dashboard";
@@ -20,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 productsRoutes(app);
 userRoutes(app);
-articleRoutes(app);
 orderRoutes(app);
 dashboardRoutes(app);
 // add routing for / path

@@ -12,13 +12,23 @@ const dashboardRoutes = (app: express.Application) => {
 const dashboard = new DashboardQueries();
 
 const productsAnActive = async (_req: Request, res: Response) => {
-  const User_id = _req.params.id;
-  const products = await dashboard.productsAnActive(User_id);
-  res.json(products);
+  try {
+    const User_id = _req.params.id;
+    const products = await dashboard.productsAnActive(User_id);
+    res.json(products);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 const productsInClosed = async (_req: Request, res: Response) => {
-  const User_id = _req.params.id;
-  const products = await dashboard.productsInClosed(User_id);
-  res.json(products);
+  try {
+    const User_id = _req.params.id;
+    const products = await dashboard.productsInClosed(User_id);
+    res.json(products);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 export default dashboardRoutes;
