@@ -11,7 +11,7 @@ my application use of the following libraries:
 - db-migrate from npm for migrations
 - jsonwebtoken from npm for working with JWTs
 - jasmine from npm for testing
-## Setup db and server instructions.
+## Setup db instructions.
 We shall create the dev and test database.
 
 1. connect to postgres server `psql -U postgres`
