@@ -12,9 +12,15 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 
 #### Users
+<<<<<<< HEAD
 - Index `/users [get] [token required]` ✔️
 - Show `/user [get] take "id" [token required]` ✔️
 - Create `/users [post] take "username,password_digest" [token required] ` ✔️
+=======
+- Index `/orders [get] [token required]` ✔️
+- Show `/order [get] take "id" [token required]` ✔️
+- Create `/order [post] take "username,password_digest" ` ✔️
+>>>>>>> bedb447df98be3efcb1edef88d243fb6e3bc591c
 
 #### Orders
 - Current Order by user (args: user id)`/products_in_orders_active/:id [get] [token required]` ✔️ 
