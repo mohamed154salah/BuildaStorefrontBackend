@@ -5,37 +5,38 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index ✔️
-- Show ✔️
-- Create [token required] ✔️ 
-- [OPTIONAL] Top 5 most popular products  ✔️
-- [OPTIONAL] Products by category (args: product category)
+- Index `/products [get]` ✔️
+- Show `/product [get] take "id" ` ✔️
+- Create `/product [post] take "name,price" [token required] `✔️ 
+- [OPTIONAL] Top 5 most popular products `/getProduct_P [get] `  ✔️
+
 
 #### Users
-- Index [token required] ✔️
-- Show [token required] ✔️
-- Create N[token required] ✔️
+- Index `/orders [get] [token required]` ✔️
+- Show `/order [get] take "id" [token required]` ✔️
+- Create `/order [post] take "username,password_digest" [token required] ` ✔️
 
 #### Orders
-- Current Order by user (args: user id)[token required] ✔️ 
-- [OPTIONAL] Completed Orders by user (args: user id)[token required] ✔️
+- Current Order by user (args: user id)`/products_in_orders_active/:id [get] [token required]` ✔️ 
+- [OPTIONAL] Completed Orders by user (args: user id)`/products_in_orders_closed/:id [get] [token required]` ✔️
 
 ## Data Shapes
 #### Product
 -  id ✔️
 - name ✔️
 - price ✔️
-- [OPTIONAL] category
-
+`CREATE TABLE products (id SERIAL PRIMARY KEY,name VARCHAR(64) NOT NULL,price integer NOT NULL);`
 #### User
 - id ✔️
 - username ✔️
 - password ✔️
-
+`CREATE TABLE users ( id SERIAL PRIMARY KEY,username VARCHAR(100),password_digest VARCHAR);`
 #### Orders
 - id ✔️
 - id of each product in the order ✔️ 
 - quantity of each product in the order ✔️
 - user_id ✔️
 - status of order (active or complete) ✔️
+`CREATE TABLE orders (id SERIAL PRIMARY KEY,status VARCHAR(15), user_id bigint REFERENCES users(id));`
 
+`CREATE TABLE order_products (id SERIAL PRIMARY KEY,quantity integer,order_id bigint REFERENCES orders(id),product_id bigint REFERENCES products(id));`

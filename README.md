@@ -1,7 +1,7 @@
 # Storefront Backend Project
 
 ## Getting Started
- To get started, clone this repo and run `yarn` in your terminal at the project root.
+ To get started, clone this repo and run `npm install` in your terminal at the project root.
 
 ## Used Technologies
 my application use of the following libraries:
@@ -11,27 +11,48 @@ my application use of the following libraries:
 - db-migrate from npm for migrations
 - jsonwebtoken from npm for working with JWTs
 - jasmine from npm for testing
+## Setup db and server instructions.
+We shall create the dev and test database.
 
+1. connect to postgres server `psql -U postgres`
+2. In PSQL to create a user `CREATE USER full_stack_user WITH PASSWORD 'password123';`
+3. In PSQL to create the dev and test database
+`CREATE DATABASE full_stack_dev;`
+`CREATE DATABASE full_stack_test;`
+4. Connect to the databases and grant all privileges
+4.A. Grant for dev database
+`\c full_stack_dev`
+`GRANT ALL PRIVILEGES ON DATABASE full_stack_dev TO full_stack_user;`
+4.B. Grant for test database
+`\c full_stack_test`
+`GRANT ALL PRIVILEGES ON DATABASE full_stack_test TO full_stack_user;`
 ## How to use
 you should create `.env` file
 #### Add some variables 
 you should change the following variables to your values
-- PORT=`___________`
-- POSTGRES_HOST =`___________`
-- POSTGRES_DB = `___________`
-- POSTGRES_USER = `___________`
-- POSTGRES_PASSWORD = `___________`
-- POSTGRES_TEST_DB=`___________`
-- NODE_ENV=`___________`
-- BCRYPT_PASSWORD=`___________`
-- SALT_ROUNDS=`___________`
-- TOKEN_SECRET=`___________`
+- PORT=`8000`
+- POSTGRES_HOST =`localhost`
+- POSTGRES_DB = `full_stack_dev`
+- POSTGRES_USER = `full_stack_user`
+- POSTGRES_PASSWORD = `password123`
+- POSTGRES_TEST_DB=`full_stack_test`
+- NODE_ENV=`dev`
+- BCRYPT_PASSWORD=`your-secret-password`
+- SALT_ROUNDS=`10`
+- TOKEN_SECRET=`alohomora123!`
+
+#### how to run MIGRATION
+to create tables in command line `db-migrate up` 
+to delete tables in command line `db-migrate reset`
 #### How to run the project 
 - run in dev mode `npm run dev`
 - run in production mode `npm run start`
 - run in test mode `npm run test`
 
 ## Example in Product 
+####Token and Authentication
+Tokens are passed in http header as
+`Authorization   Bearer <token>`
 #### Product API
 1. to create product you should have token and go to api and send `name` and `price`  `http://localhost:8000/product`  
 2. to get all products `http://localhost:8000/products`
