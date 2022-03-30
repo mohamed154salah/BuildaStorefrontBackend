@@ -7,7 +7,7 @@ dotenv.config();
 const userRoutes = (app: express.Application) => {
   app.get("/users", authorization, index);
   app.get("/user", authorization, show);
-  app.post("/users", authorization, create);
+  app.post("/users", create);
   app.delete("/users", destroy);
   app.put("/users",update)
   app.post("/users/authenticate", authenticate);
