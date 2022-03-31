@@ -8,7 +8,7 @@ const userRoutes = (app: express.Application) => {
   app.get("/users", authorization, index);
   app.get("/user", authorization, show);
   app.post("/users", create);
-  app.delete("/users", destroy);
+  app.delete("/users",authorization, destroy);
   app.put("/users",authorization,update)
   app.post("/users/authenticate", authenticate);
 };
@@ -18,8 +18,12 @@ interface JwtPayload {
 const store = new UserStore();
 
 const index = async (_req: Request, res: Response) => {
+  try{
   const users = await store.index();
   res.json(users);
+  }catch(err){
+    res.status(404).json(err);
+  }
 };
 
 const show = async (_req: Request, res: Response) => {

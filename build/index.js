@@ -28,7 +28,6 @@ var morgan_1 = __importDefault(require("morgan"));
 var dotenv = __importStar(require("dotenv"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var user_1 = __importDefault(require("./handlers/user"));
-var book_1 = __importDefault(require("./handlers/book"));
 var products_1 = __importDefault(require("./handlers/products"));
 var order_1 = __importDefault(require("./handlers/order"));
 var dashboard_1 = __importDefault(require("./handlers/dashboard"));
@@ -43,7 +42,6 @@ app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)());
 (0, products_1.default)(app);
 (0, user_1.default)(app);
-(0, book_1.default)(app);
 (0, order_1.default)(app);
 (0, dashboard_1.default)(app);
 // add routing for / path

@@ -46,8 +46,12 @@ const create = async (_req: Request, res: Response) => {
 };
 
 const destroy = async (_req: Request, res: Response) => {
+  try{
   const deleted = await productsStore.destroy(_req.body.id);
   res.json(deleted);
+  }catch(err){
+    res.status(400).json(err);
+  }
 };
 
 const productsRoutes = (app: express.Application) => {
@@ -55,7 +59,7 @@ const productsRoutes = (app: express.Application) => {
   app.get("/productTop", getProduct_P);
   app.get("/product", show);
   app.post("/product", authorization, create);
-  app.delete("/product", destroy);
+  app.delete("/product",authorization, destroy);
 };
 
 export default productsRoutes;

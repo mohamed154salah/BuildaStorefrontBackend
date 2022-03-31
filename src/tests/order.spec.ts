@@ -81,6 +81,7 @@ describe("testing Order Database model ", () => {
         password_digest: "password_right"
         // eslint-disable-next-line prettier/prettier
       } as User;
+      let token: string;
 
     beforeAll(async () => {
       const conn = await Client.connect();
@@ -89,6 +90,13 @@ describe("testing Order Database model ", () => {
       conn.release();
       const createUser = await Userstore.create(user);
       const createOrder = await store.create(order);
+      const res = await request.post("/users/authenticate")
+      .set("Content-Type", "application/json")
+      .send({
+        username: user.username,
+        password: user.password_digest
+      });
+      token = res.body;
       order.id = createOrder.id;
       user.id = createUser.id;
     });
@@ -105,24 +113,25 @@ describe("testing Order Database model ", () => {
   it("test index function work", async () => {
     const res = await request.get('/orders')
       .set("Content-Type", "application/json")
+      .set('Authorization', `Bearer ${token}`);
+
       
     expect(res.status).toBe(200);
     expect(res.body).toBeInstanceOf(Array);
   });
   
     it("test show function work", async() => {
-      const res = await request.get('/order')
+      const res = await request.get('/order?id=1')
       .set("Content-Type", "application/json")
-      .send({id:"1"});
+      .set('Authorization', `Bearer ${token}`);
 
     expect(res.status).toBe(200);
     expect(res.body).toBeInstanceOf(Object); 
      });   
 
-     it("test show function not work", async() => {
-        const res = await request.get('/product')
-        .set("Content-Type", "application/json")
-        .send({id:"100"});
+     it("test show function not work because no auth send", async() => {
+        const res = await request.get('/product?id=1')
+        .set("Content-Type", "application/json");
         console.log(res.body)
       expect(res.status).toBe(400);
       expect(res.body).toBeInstanceOf(Object); 

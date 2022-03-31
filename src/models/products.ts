@@ -8,11 +8,16 @@ export type Products = {
 
 export class ProductsStore {
   async index(): Promise<Products[]> {
+    try{
     const conn = await Client.connect();
     const sql = "SELECT * FROM products;";
     const result = await conn.query(sql);
     conn.release();
     return result.rows;
+  } catch (error: unknown) {
+    // eslint-disable-next-line prettier/prettier
+    throw new Error(error as string);
+  }
   }
   async indexTop5(): Promise<{ product_id: number, popular: number }[]> {
     try {
@@ -46,18 +51,28 @@ export class ProductsStore {
   }
 
   async create(products: Products): Promise<Products> {
+    try{
     const conn = await Client.connect();
     const sql = "INSERT INTO products (name,price) VALUES($1,$2) RETURNING *;";
     const result = await conn.query(sql, [products.name, products.price]);
     conn.release();
     return result.rows[0];
+  } catch (error: unknown) {
+    // eslint-disable-next-line prettier/prettier
+    throw new Error(error as string);
+  }
   }
 
   async destroy(id: number): Promise<Products> {
+    try{
     const conn = await Client.connect();
     const sql = "DELETE from products WHERE id = ($1);";
     const result = await conn.query(sql, [id]);
     conn.release();
     return result.rows[0];
+  } catch (error: unknown) {
+    // eslint-disable-next-line prettier/prettier
+    throw new Error(error as string);
+  }
   }
 }

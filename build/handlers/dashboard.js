@@ -49,30 +49,44 @@ var dashboardRoutes = function (app) {
 };
 var dashboard = new dashboard_1.DashboardQueries();
 var productsAnActive = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var User_id, products;
+    var User_id, products, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                _a.trys.push([0, 2, , 3]);
                 User_id = _req.params.id;
                 return [4 /*yield*/, dashboard.productsAnActive(User_id)];
             case 1:
                 products = _a.sent();
                 res.json(products);
-                return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 2:
+                error_1 = _a.sent();
+                res.status(400);
+                res.json(error_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
 var productsInClosed = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var User_id, products;
+    var User_id, products, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                _a.trys.push([0, 2, , 3]);
                 User_id = _req.params.id;
                 return [4 /*yield*/, dashboard.productsInClosed(User_id)];
             case 1:
                 products = _a.sent();
                 res.json(products);
-                return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 2:
+                error_2 = _a.sent();
+                res.status(400);
+                res.json(error_2);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };

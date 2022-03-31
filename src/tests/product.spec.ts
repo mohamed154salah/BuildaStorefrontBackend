@@ -59,7 +59,7 @@ describe("testing product Database model ", () => {
   });
 });
 
- describe("test user api", () => {
+ describe("test product api", () => {
     const product = {
         name: "phone",
         price: 200,
@@ -90,19 +90,17 @@ describe("testing product Database model ", () => {
   });
   
     it("test show function work", async() => {
-      const res = await request.get('/product')
-      .set("Content-Type", "application/json")
-      .send({id:"1"});
+      const res = await request.get('/product?id=1')
+      .set("Content-Type", "application/json");
 
     expect(res.status).toBe(200);
     expect(res.body).toBeInstanceOf(Object); 
      });   
 
      it("test show function not work", async() => {
-        const res = await request.get('/product')
-        .set("Content-Type", "application/json")
-        .send({id:"100"});
-        console.log(res.body)
+        const res = await request.get('/product?id=100')
+        .set("Content-Type", "application/json");
+                console.log(res.body)
       expect(res.status).toBe(400);
       expect(res.body).toBeInstanceOf(Object); 
        });   

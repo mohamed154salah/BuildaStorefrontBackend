@@ -85,21 +85,26 @@ export class UserStore {
   }
 
   async authenticate(username: string, password: string): Promise<User | null> {
-    const conn = await Client.connect();
-    const sql = "SELECT password_digest,id ,username FROM users WHERE username=($1)";
+    try {
+      const conn = await Client.connect();
+      const sql = "SELECT password_digest,id ,username FROM users WHERE username=($1)";
 
-    const result = await conn.query(sql, [username]);
+      const result = await conn.query(sql, [username]);
 
 
-    if (result.rows.length ) {
-      const user = result.rows[0];
-      if (
-        bcrypt.compareSync(password + BCRYPT_PASSWORD, user.password_digest)
-      ) {
-        return user;
+      if (result.rows.length) {
+        const user = result.rows[0];
+        if (
+          bcrypt.compareSync(password + BCRYPT_PASSWORD, user.password_digest)
+        ) {
+          return user;
+        }
       }
-    }
 
-    return null;
+      return null;
+    } catch (error: unknown) {
+      // eslint-disable-next-line prettier/prettier
+      throw new Error(error as string);
+    }
   }
 }

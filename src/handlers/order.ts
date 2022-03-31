@@ -98,8 +98,8 @@ const orderRoutes = (app: express.Application) => {
   app.get("/orders", authorization, index);
   app.get("/order", authorization, show);
   app.post("/order", authorization, create);
-  app.delete("/order", destroy);
-  app.get("/or", getProduct_order);
+  app.delete("/order",authorization, destroy);
+  app.get("/or",authorization, getProduct_order);
   app.post("/orders/:id/products", authorization, addProduct);
 };
 

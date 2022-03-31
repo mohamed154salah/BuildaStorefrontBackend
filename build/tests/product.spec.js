@@ -120,7 +120,7 @@ describe("testing product Database model ", function () {
         }); });
     });
 });
-describe("test user api", function () {
+describe("test product api", function () {
     var product = {
         name: "phone",
         price: 200,
@@ -179,9 +179,8 @@ describe("test user api", function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/product')
-                        .set("Content-Type", "application/json")
-                        .send({ id: "1" })];
+                case 0: return [4 /*yield*/, request.get('/product?id=1')
+                        .set("Content-Type", "application/json")];
                 case 1:
                     res = _a.sent();
                     expect(res.status).toBe(200);
@@ -194,9 +193,8 @@ describe("test user api", function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/product')
-                        .set("Content-Type", "application/json")
-                        .send({ id: "100" })];
+                case 0: return [4 /*yield*/, request.get('/product?id=100')
+                        .set("Content-Type", "application/json")];
                 case 1:
                     res = _a.sent();
                     console.log(res.body);

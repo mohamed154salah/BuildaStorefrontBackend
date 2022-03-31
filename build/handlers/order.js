@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var order_1 = require("./../models/order");
+var authorization_1 = __importDefault(require("../middleware/authorization"));
 var dotenv_1 = __importDefault(require("dotenv"));
 var order_products_1 = require("./../models/order_products");
 dotenv_1.default.config();
@@ -69,11 +70,11 @@ var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, funct
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!_req.body.id) return [3 /*break*/, 5];
+                if (!_req.query.id) return [3 /*break*/, 5];
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, orderStore.show(_req.body.id)];
+                return [4 /*yield*/, orderStore.show(parseInt(_req.query.id))];
             case 2:
                 order = _a.sent();
                 res.json(order);
@@ -199,11 +200,11 @@ var getProduct_order = function (_req, res) { return __awaiter(void 0, void 0, v
     });
 }); };
 var orderRoutes = function (app) {
-    app.get("/orders", index);
-    app.get("/order", show);
-    app.post("/order", create);
-    app.delete("/order", destroy);
-    app.get("/or", getProduct_order);
-    app.post("/orders/:id/products", addProduct);
+    app.get("/orders", authorization_1.default, index);
+    app.get("/order", authorization_1.default, show);
+    app.post("/order", authorization_1.default, create);
+    app.delete("/order", authorization_1.default, destroy);
+    app.get("/or", authorization_1.default, getProduct_order);
+    app.post("/orders/:id/products", authorization_1.default, addProduct);
 };
 exports.default = orderRoutes;

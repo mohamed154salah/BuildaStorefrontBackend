@@ -47,38 +47,54 @@ dotenv_1.default.config();
 var userRoutes = function (app) {
     app.get("/users", authorization_1.default, index);
     app.get("/user", authorization_1.default, show);
-    app.post("/users", authorization_1.default, create);
-    app.delete("/users", destroy);
-    app.put("/users", update);
+    app.post("/users", create);
+    app.delete("/users", authorization_1.default, destroy);
+    app.put("/users", authorization_1.default, update);
     app.post("/users/authenticate", authenticate);
 };
 var store = new user_1.UserStore();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
+    var users, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store.index()];
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, store.index()];
             case 1:
                 users = _a.sent();
                 res.json(users);
-                return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 2:
+                err_1 = _a.sent();
+                res.status(404).json(err_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
 var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
+    var user, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store.show(_req.body.id)];
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, store.show(_req.query.id)];
             case 1:
                 user = _a.sent();
                 res.json(user);
-                return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 2:
+                error_1 = _a.sent();
+                res.status(400);
+                // eslint-disable-next-line prettier/prettier
+                res.json(error_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
 var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, newUser, token, err_1;
+    var user, newUser, token, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -96,17 +112,17 @@ var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
                 res.json(token);
                 return [3 /*break*/, 4];
             case 3:
-                err_1 = _a.sent();
+                err_2 = _a.sent();
                 res.status(400);
                 // eslint-disable-next-line prettier/prettier
-                res.json(err_1 + user);
+                res.json(err_2 + user);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); };
 var update = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, authorizationHeader, token, id, updated, err_2;
+    var user, authorizationHeader, token, id, updated, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -137,28 +153,36 @@ var update = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 res.json(updated);
                 return [3 /*break*/, 4];
             case 3:
-                err_2 = _a.sent();
+                err_3 = _a.sent();
                 res.status(400);
-                res.json(err_2 + user);
+                res.json(err_3 + user);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); };
 var destroy = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var deleted;
+    var deleted, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store.delete(_req.body.id)];
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, store.delete(_req.body.id)];
             case 1:
                 deleted = _a.sent();
                 res.json(deleted);
-                return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 2:
+                error_2 = _a.sent();
+                res.status(401);
+                res.json(error_2);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
 var authenticate = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, u, token, err_3;
+    var user, u, token, err_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -176,9 +200,9 @@ var authenticate = function (_req, res) { return __awaiter(void 0, void 0, void 
                 res.json(token);
                 return [3 /*break*/, 4];
             case 3:
-                err_3 = _a.sent();
+                err_4 = _a.sent();
                 res.status(401);
-                res.json(err_3 + user);
+                res.json(err_4 + user);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }

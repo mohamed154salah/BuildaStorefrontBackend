@@ -152,10 +152,12 @@ var UserStore = /** @class */ (function () {
     };
     UserStore.prototype.authenticate = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, result, user;
+            var conn, sql, result, user, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, database_1.default.connect()];
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
                         sql = "SELECT password_digest,id ,username FROM users WHERE username=($1)";
@@ -169,6 +171,11 @@ var UserStore = /** @class */ (function () {
                             }
                         }
                         return [2 /*return*/, null];
+                    case 3:
+                        error_1 = _a.sent();
+                        // eslint-disable-next-line prettier/prettier
+                        throw new Error(error_1);
+                    case 4: return [2 /*return*/];
                 }
             });
         });

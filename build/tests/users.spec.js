@@ -212,13 +212,13 @@ describe("test user api", function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/users?id=1')
+                case 0: return [4 /*yield*/, request.get('/user?id=1')
                         .set("Content-Type", "application/json")
                         .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     res = _a.sent();
                     expect(res.status).toBe(200);
-                    expect(res.body).toBeInstanceOf(Array);
+                    expect(res.body).toBeInstanceOf(Object);
                     return [2 /*return*/];
             }
         });

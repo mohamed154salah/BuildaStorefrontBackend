@@ -105,18 +105,19 @@ describe("test user api", () => {
   it("test index function work", async () => {
     const res = await request.get('/users')
       .set("Content-Type", "application/json")
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${token}`);
       
     expect(res.status).toBe(200);
     expect(res.body).toBeInstanceOf(Array);
   });
   
     it("test show function work", async() => {
-      const res = await request.get('/users?id=1')
+      const res = await request.get('/user?id=1')
       .set("Content-Type", "application/json")
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${token}`);
+
       
     expect(res.status).toBe(200);
-    expect(res.body).toBeInstanceOf(Array); 
+    expect(res.body).toBeInstanceOf(Object); 
      });  
 })

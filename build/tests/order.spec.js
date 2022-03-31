@@ -148,8 +148,9 @@ describe("test order api", function () {
         password_digest: "password_right"
         // eslint-disable-next-line prettier/prettier
     };
+    var token;
     beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
-        var conn, createUser, createOrder;
+        var conn, createUser, createOrder, res;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, database_1.default.connect()];
@@ -168,6 +169,15 @@ describe("test order api", function () {
                     return [4 /*yield*/, store.create(order)];
                 case 5:
                     createOrder = _a.sent();
+                    return [4 /*yield*/, request.post("/users/authenticate")
+                            .set("Content-Type", "application/json")
+                            .send({
+                            username: user.username,
+                            password: user.password_digest
+                        })];
+                case 6:
+                    res = _a.sent();
+                    token = res.body;
                     order.id = createOrder.id;
                     user.id = createUser.id;
                     return [2 /*return*/];
@@ -199,7 +209,8 @@ describe("test order api", function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('/orders')
-                        .set("Content-Type", "application/json")];
+                        .set("Content-Type", "application/json")
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     res = _a.sent();
                     expect(res.status).toBe(200);
@@ -212,9 +223,9 @@ describe("test order api", function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/order')
+                case 0: return [4 /*yield*/, request.get('/order?id=1')
                         .set("Content-Type", "application/json")
-                        .send({ id: "1" })];
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     res = _a.sent();
                     expect(res.status).toBe(200);
@@ -223,13 +234,12 @@ describe("test order api", function () {
             }
         });
     }); });
-    it("test show function not work", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it("test show function not work because no auth send", function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/product')
-                        .set("Content-Type", "application/json")
-                        .send({ id: "100" })];
+                case 0: return [4 /*yield*/, request.get('/product?id=1')
+                        .set("Content-Type", "application/json")];
                 case 1:
                     res = _a.sent();
                     console.log(res.body);
